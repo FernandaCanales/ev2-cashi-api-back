@@ -2,6 +2,9 @@
 
 API REST de finanzas personales construida con arquitectura N-Layer para la Evaluacion 2 del ramo Desarrollo de Aplicaciones Web II.
 
+## Video demostrativo
+https://youtu.be/iYWxGRk_LTI
+
 ---
 
 ## Tecnologias usadas

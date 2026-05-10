@@ -10,9 +10,9 @@ El frontend actualmente usa AsyncStorage para guardar datos en el dispositivo. P
 
 ## URL base de la API
 
-Cuando usas Expo Go en tu telefono, localhost no apunta a tu computador. Debes usar tu IP local.
+Cuando usas Expo Go en tu telefono, localhost no apunta al computador. Se debe usar la IP local.
 
-Para encontrar tu IP en Windows:
+Para encontrar el IP en Windows:
 ipconfig
 Busca "Direccion IPv4" — sera algo como 192.168.1.X
 

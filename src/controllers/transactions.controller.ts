@@ -15,6 +15,7 @@ export const getTransactionById = async (c: Context) => {
   return c.json(transaction)
 }
 
+//Calcula el balance total sumando los ingresos y restando los gastos
 export const getBalance = async (c: Context) => {
   const transactions = await transactionsRepository.findAllRaw()
   const totalIncome = transactions
