@@ -109,7 +109,37 @@ Leccion: El orden de las rutas importa. Las rutas especificas siempre van antes 
 
 ---
 
-## Lo que aprendimos
+---
+
+## Error 8 — app.use() registrado después de app.route()
+
+Cuando aparece: El middleware de auth no se aplica aunque el token sea válido.
+
+Síntoma: c.get('userId') devuelve undefined aunque el token sea correcto.
+
+Causa: Hono aplica los middlewares en el orden en que se registran. Si app.route() va antes que app.use(), las requests llegan al controller sin pasar por el middleware.
+
+Solución: Siempre registrar app.use() ANTES que app.route() para las rutas protegidas.
+
+Lección: El orden de registro en Hono importa tanto para rutas como para middlewares.
+
+---
+
+## Error 9 — receiptUrl con ruta relativa falla validación de Zod
+
+Cuando aparece: Al enviar "/uploads/archivo.jpg" en el campo receiptUrl.
+
+Error: Invalid URL
+
+Causa: Zod valida que sea una URL completa con protocolo (http:// o https://).
+
+Solución: Enviar la URL completa: "http://localhost:3000/uploads/archivo.jpg"
+
+Lección: z.string().url() exige URLs completas con protocolo.
+
+---
+
+## Lo que aprendimos unidad 2
 
 - La arquitectura N-Layer separa responsabilidades: cada capa hace solo lo suyo.
 - El repository es el unico que habla con Prisma. El controller nunca importa Prisma directamente.
@@ -119,3 +149,13 @@ Leccion: El orden de las rutas importa. Las rutas especificas siempre van antes 
 - Docker Desktop debe estar abierto antes de cualquier comando docker.
 - El orden de las rutas en Hono importa.
 - Con Prisma 7 y Yarn Berry se necesita nodeLinker node-modules.
+
+## Lo que aprendimos en la Unidad 3
+
+- Las contraseñas nunca se guardan en texto plano — siempre se hashean con bcrypt.
+- El JWT permite identificar al usuario en cada request sin guardar estado en el servidor.
+- El middleware de autenticación debe estar centralizado, no duplicado en cada ruta.
+- El ownership check (verificar que la transacción pertenece al usuario) va en el controller, no en el repository.
+- app.use() siempre antes de app.route() en Hono para que el middleware se aplique.
+- /upload y /balance deben ir antes que /:id en las rutas.
+- Un mismo error de credenciales debe devolver el mismo mensaje para usuario inexistente y contraseña incorrecta — no le digas al atacante cuál falló.
