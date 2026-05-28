@@ -1,13 +1,29 @@
 import 'dotenv/config'
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
+import { authMiddleware } from './middlewares/auth.middleware.js'
+import authRouter from './routes/auth.routes.js'
 import categoriesRouter from './routes/categories.routes.js'
 import transactionsRouter from './routes/transactions.routes.js'
 
-const app = new Hono()
+type Variables = {
+  userId: number
+}
 
-app.get('/', (c) => c.json({ message: 'Cashi API funcionando' }))
+const app = new Hono<{ Variables: Variables }>()
 
+// Archivos estáticos (comprobantes)
+app.use('/uploads/*', serveStatic({ root: './' }))
+
+// Rutas públicas — sin token
+app.route('/auth', authRouter)
+
+// Middleware de auth — ANTES de las rutas protegidas
+app.use('/categories/*', authMiddleware)
+app.use('/transactions/*', authMiddleware)
+
+// Rutas protegidas
 app.route('/categories', categoriesRouter)
 app.route('/transactions', transactionsRouter)
 

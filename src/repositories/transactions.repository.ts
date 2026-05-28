@@ -7,26 +7,30 @@ type TransactionWithCategory = Transaction & {
 }
 
 interface TransactionRepository {
-  findAll: () => Promise<TransactionWithCategory[]>
+  findAll: (userId: number) => Promise<TransactionWithCategory[]>
   findById: (id: number) => Promise<TransactionWithCategory | null>
-  findAllRaw: () => Promise<Transaction[]>
-  create: (data: CreateTransactionInput) => Promise<Transaction>
+  findAllRaw: (userId: number) => Promise<Transaction[]>
+  create: (data: CreateTransactionInput, userId: number) => Promise<Transaction>
   update: (id: number, data: UpdateTransactionInput) => Promise<Transaction>
   remove: (id: number) => Promise<void>
 }
 
 export const transactionsRepository: TransactionRepository = {
-  findAll: () =>
-    prisma.transaction.findMany({ include: { category: true } }),
+  findAll: (userId) =>
+    prisma.transaction.findMany({
+      where: { userId },
+      include: { category: true },
+    }),
 
   findById: (id) =>
     prisma.transaction.findUnique({ where: { id }, include: { category: true } }),
 
-  findAllRaw: () => prisma.transaction.findMany(),
+  findAllRaw: (userId) =>
+    prisma.transaction.findMany({ where: { userId } }),
 
-  create: (data) =>
+  create: (data, userId) =>
     prisma.transaction.create({
-      data: { ...data, date: new Date(data.date) },
+      data: { ...data, date: new Date(data.date), userId },
     }),
 
   update: (id, data) =>
@@ -35,5 +39,6 @@ export const transactionsRepository: TransactionRepository = {
       data: { ...data, date: data.date ? new Date(data.date) : undefined },
     }),
 
-  remove: (id) => prisma.transaction.delete({ where: { id } }).then(() => undefined),
+  remove: (id) =>
+    prisma.transaction.delete({ where: { id } }).then(() => undefined),
 }
