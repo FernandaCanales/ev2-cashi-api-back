@@ -16,6 +16,7 @@ interface TransactionRepository {
 }
 
 export const transactionsRepository: TransactionRepository = {
+  // Método para obtener todas las transacciones de un usuario, incluyendo la información de la categoría asociada a cada transacción
   findAll: (userId) =>
     prisma.transaction.findMany({
       where: { userId },

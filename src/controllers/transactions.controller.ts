@@ -3,6 +3,7 @@ import { transactionsRepository } from '../repositories/transactions.repository.
 import { createTransactionSchema, updateTransactionSchema } from '../schemas/transactions.schema.js'
 import { parsePrismaError } from '../lib/prisma-errors.js'
 
+// Controladores para manejar las operaciones CRUD de transacciones
 export const getTransactions = async (c: Context) => {
   const userId = c.get('userId') as number
   const transactions = await transactionsRepository.findAll(userId)
@@ -16,6 +17,7 @@ export const getTransactionById = async (c: Context) => {
   return c.json(transaction)
 }
 
+// Controlador para obtener el balance actual del usuario, calculando la suma de ingresos y gastos a
 export const getBalance = async (c: Context) => {
   const userId = c.get('userId') as number
   const transactions = await transactionsRepository.findAllRaw(userId)
@@ -42,7 +44,7 @@ export const createTransaction = async (c: Context) => {
     return c.json({ error: message }, status as any)
   }
 }
-
+// Controlador para actualizar una transacción existente, verificando que el usuario sea el propietario de la transacción antes de permitir la actualización
 export const updateTransaction = async (c: Context) => {
   const userId = c.get('userId') as number
   const id = Number(c.req.param('id'))
@@ -52,7 +54,7 @@ export const updateTransaction = async (c: Context) => {
 
   const existing = await transactionsRepository.findById(id)
   if (!existing) return c.json({ error: 'Transaccion no encontrada' }, 404 as any)
-  if (existing.userId !== userId) return c.json({ error: 'No autorizado' }, 403 as any)
+  if (existing.userId !== userId) return c.json({ error: 'No autorizado' }, 403 as any)// Verificar que la categoría exista y pertenezca al usuario
 
   try {
     const transaction = await transactionsRepository.update(id, result.data)
@@ -67,9 +69,10 @@ export const deleteTransaction = async (c: Context) => {
   const userId = c.get('userId') as number
   const id = Number(c.req.param('id'))
 
+  // Verificar que la transacción exista y que el usuario sea el propietario antes de permitir la eliminación
   const existing = await transactionsRepository.findById(id)
-  if (!existing) return c.json({ error: 'Transaccion no encontrada' }, 404 as any)
-  if (existing.userId !== userId) return c.json({ error: 'No autorizado' }, 403 as any)
+  if (!existing) return c.json({ error: 'Transaccion no encontrada' }, 404 as any) // Verificar que la transacción exista antes de intentar eliminarla
+  if (existing.userId !== userId) return c.json({ error: 'No autorizado' }, 403 as any)// Verificar que la categoría exista y pertenezca al usuario
 
   try {
     await transactionsRepository.remove(id)
