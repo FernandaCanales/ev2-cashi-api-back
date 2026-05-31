@@ -138,6 +138,23 @@ Solución: Enviar la URL completa: "http://localhost:3000/uploads/archivo.jpg"
 Lección: z.string().url() exige URLs completas con protocolo.
 
 ---
+## Error 10 — prisma migrate falla si Docker no está corriendo
+
+Cuando aparece: Al correr yarn prisma migrate dev sin tener Docker Desktop abierto.
+
+Error:
+Can't reach database server at localhost:5432
+
+Causa: Prisma intenta conectarse a PostgreSQL, pero el contenedor no está corriendo
+porque Docker Desktop no estaba iniciado.
+
+Solución: Abrir Docker Desktop, esperar a que cargue y correr docker compose up -d
+antes de cualquier comando de Prisma.
+
+Lección: Prisma no falla por ser Prisma — falla porque no hay base de datos a la cual
+conectarse. Desarrollar este tipo de aplicaciones requiere entender cómo interactúan
+todas las herramientas del entorno: si Docker no corre, PostgreSQL no corre,
+y si PostgreSQL no corre, Prisma no puede hacer nada.
 
 ## Lo que aprendimos unidad 2
 
