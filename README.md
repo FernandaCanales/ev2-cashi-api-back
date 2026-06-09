@@ -154,7 +154,7 @@ Render usa un filesystem efímero — los archivos guardados localmente se pierd
 | Variable | Descripción |
 |---|---|
 | `DATABASE_URL` | Internal Database URL de Render |
-| `JWT_SECRET` | Clave secreta para firmar los JWT |
+| `JWT_SECRET` | Clave segura generada con `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
 | `R2_ACCESS_KEY_ID` | Access Key ID del token de Cloudflare R2 |
 | `R2_SECRET_ACCESS_KEY` | Secret Access Key del token de Cloudflare R2 |
 | `R2_ENDPOINT` | Endpoint S3 de la cuenta de Cloudflare |
