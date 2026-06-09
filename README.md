@@ -7,7 +7,7 @@ API REST de finanzas personales construida con arquitectura N-Layer para la Eval
 
 - Evaluación 2: https://youtu.be/iYWxGRk_LTI
 - Evaluación 3: https://youtu.be/yONMV4rf6Mw
-- Examen Final: (pendiente — agregar al subir video)
+- Examen Final: (https://youtu.be/j_BgoK8-qjE)
 
 ---
 

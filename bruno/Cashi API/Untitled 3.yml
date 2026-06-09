@@ -1,0 +1,22 @@
+info:
+  name: Untitled 3
+  type: http
+  seq: 11
+
+http:
+  method: POST
+  url: https://ev2-cashi-api-back.onrender.com/categories
+  body:
+    type: json
+    data: '{ "name": "Alimentacion" }'
+  auth:
+    type: bearer
+    token: |-
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJmaW5hbEBjYXNoaS5jb20iLCJpYXQiOjE3ODEwNDIyNjksImV4cCI6MTc4MTY0NzA2OX0.FBsjOTqDs5uDEfRrRmQn75lvI8gR9TyzMAzrZnTbJI4
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJmaW5hbEBjYXNoaS5jb20iLCJpYXQiOjE3ODEwNDIyNjksImV4cCI6MTc4MTY0NzA2OX0.FBsjOTqDs5uDEfRrRmQn75lvI8gR9TyzMAzrZnTbJI4
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
